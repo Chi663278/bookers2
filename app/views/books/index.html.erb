@@ -17,7 +17,11 @@
                   <%= image_tag book.get_image(80,80)%>
                 <% end %>
               </td>
-              <td><%= book.title %></td>
+              <td>
+                <%= link_to book_path(book.id) do %>
+                  <%= book.title %>
+                <% end %>
+              </td>
               <td><%= book.caption %></td>
             </tr>
           <% end %>
