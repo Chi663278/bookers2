@@ -30,6 +30,7 @@ class BooksController < ApplicationController
 
   def destroy
     book = Book.find(params[:id])
+    book.destroy
     redirect_to books_path
   end
 
@@ -41,9 +42,10 @@ class BooksController < ApplicationController
   end
 
   def show
-    @user = current_user
+    book = Book.find(params[:id])
+    @user = User.find(book.user_id)
     @book = Book.new
-    @books = Book.find(params[:id])
+    @other_book = Book.find(params[:id])
   end
 
   def is_matching_login_user
@@ -56,6 +58,6 @@ class BooksController < ApplicationController
 
   private #ストロングパラメータbook_paramsを定義
   def book_params
-    params.require(:book).permit(:title, :caption, :image)
+    params.require(:book).permit(:title, :body)
   end
 end

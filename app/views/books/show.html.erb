@@ -5,15 +5,15 @@
       <table class="table">
         <tbody><tr>
           <td>
-            <%= link_to user_path(@books.user.id) do %>
-              <%= image_tag @books.user.get_profile_image(100,100) %><br><%= @books.user.name %>
+            <%= link_to user_path(@other_book.user.id) do %>
+              <%= image_tag @other_book.user.get_profile_image(100,100) %><br><%= @other_book.user.name %>
             <% end %>
           </td>
-          <td><%= @books.title %></td>
-          <td><%= @books.caption %></td>
-          <% if @books.user == current_user %>
-            <td><%= link_to "Edit", edit_book_path(@books.id), class: 'btn btn-sm btn-success' %></td>
-            <td><%= link_to "Destroy", book_path(@books.id), method: :delete, "data-confirm"=>"本当に消しますか？", class: 'btn btn-sm btn-danger' %></td>
+          <td><%= @other_book.title %></td>
+          <td><%= @other_book.body %></td>
+          <% if @other_book.user == current_user %>
+            <td><%= link_to "Edit", edit_book_path(@other_book.id), class: 'btn btn-sm btn-success' %></td>
+            <td><%= link_to "Destroy", book_path(@other_book.id), method: :delete, "data-confirm"=>"本当に消しますか？", class: 'btn btn-sm btn-danger' %></td>
           <% end %>
         </tr></tbody>
       </table>
