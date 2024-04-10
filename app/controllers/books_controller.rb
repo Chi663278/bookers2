@@ -8,15 +8,16 @@ class BooksController < ApplicationController
   end
 
   def show
-    book = Book.find(params[:id])
-    @user = User.find(book.user_id)
-    @book = Book.new
     @other_book = Book.find(params[:id])
+    @user = @other_book.user
+    @book = Book.new
+
   end
 
   def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
+  # @book = current_user.books.new(book_params)   association （idの登録を記述しなくていい）
     if @book.save
       flash[:notice] = "You have created book successfully."
       redirect_to book_path(@book.id)
@@ -47,7 +48,13 @@ class BooksController < ApplicationController
     redirect_to books_path
   end
 
-  def is_matching_login_user
+
+  private #ストロングパラメータbook_paramsを定義
+    def book_params
+      params.require(:book).permit(:title, :body)
+    end
+
+    def is_matching_login_user
     book = Book.find(params[:id])
     user = User.find(book.user_id)
     unless user.id == current_user.id
@@ -55,8 +62,4 @@ class BooksController < ApplicationController
     end
   end
 
-  private #ストロングパラメータbook_paramsを定義
-  def book_params
-    params.require(:book).permit(:title, :body)
-  end
 end
